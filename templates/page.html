@@ -1,0 +1,2581 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>DHMZ - Državni hidrometeorološki zavod</title>
+<script src="assets/js/modernizr-custom.js"></script>
+<!--   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+   integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+   crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+   integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+   crossorigin=""></script>-->
+<link crossorigin="" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" rel="stylesheet"/>
+<script crossorigin="" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+<link href="assets/js/custom-scroll/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
+<link href="assets/js/tooltipster/css/tooltipster.bundle.min.css" rel="stylesheet"/>
+<link href="assets/css/fdf.css" rel="stylesheet"/>
+<link href="assets/css/custom.css" rel="stylesheet"/>
+<link href="fdaw/css/fdaw.dist.css" rel="stylesheet"/>
+<script language="javascript">
+
+function openit1() {
+newWindow = window.open('upozorenja_info.php','Ikone upozorenja', 'width=450,height=450');
+}
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">-->
+<!--link rel="stylesheet" href="galerija/css/blueimp-gallery.css">
+<link rel="stylesheet" href="galerija/css/blueimp-gallery-indicator.css"-->
+<script language="javascript" type="text/javascript">
+<!--
+function OpenPopup (c) {
+window.open(c,
+'window',
+'scrollbars=yes,menubar=yes,status=yes');
+}
+</script>
+<!--<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>-->
+<style>
+.fd-c-map__regija path,
+.fd-c-map__regija circle {
+    fill-opacity: 0.75;
+}
+
+.fd-c-map__regija:hover path,
+.fd-c-map__regija:hover circle {
+    fill-opacity: 0.95;
+}
+</style>
+<!--  za sortiranje tablica  -->
+<script src="assets/js/sorttable.js"></script>
+<script>sorttable.sort_alpha = function(a,b) { return a[0].localeCompare(b[0]); }</script>
+</head>
+<!--<body>-->
+<body>
+<div class="fd-u-display--none fd-u-md-display--block"><button id="myBtn" onclick="topFunction()" title="Go to top">Na vrh</button></div>
+<header id="header">
+<div class="fd-l-container">
+<div class="fd-l-row">
+<!--  <div class="fd-l-col--8 fd-l-sm-col--8 fd-l-md-col--8 fd-l-lg-col--7 fd-l-xl-col--7">-->
+<div class="fd-l-col--6 fd-l-sm-col--6 fd-l-md-col--6 fd-l-lg-col--6 fd-l-xl-col--6">
+<a class="brand fd-u-padding-right--3 fd-u-md-padding-right--0" href="index.php" title="DHMZ - Državni hidrometeorološki zavod">
+<div class="brand__flex">
+<div class="brand__symbol">
+<img alt="DHMZ - Državni hidrometeorološki zavod" height="45" src="assets/images/logo.png" srcset="assets/images/logo.svg" width="55"/>
+</div><!-- /.brand__symbol -->
+<div class="brand__wording">
+<h1>
+<span class="brand__wording fd-u-display--none fd-u-md-display--inline-block">Državni hidrometeorološki zavod</span>
+<span class="brand__wording--short fd-u-md-display--none">DHMZ</span>
+</h1>
+</div><!-- /.brand__wording -->
+<div class="brand__addon fd-u-display--none fd-u-md-display--inline-block">
+<img alt="Hrvatski grb" src="assets/images/grb.png" width="35"/>
+</div><!-- /.brand__addon -->
+</div><!--/.brand__flex-->
+</a><!-- /.brand -->
+</div><!-- /.fd-l-col-8 -->
+<!-- <div class="fd-l-col--4 fd-u-md-display--none">-->
+<div class="fd-l-col--6 fd-u-md-display--none">
+<div class="fd-l-row">
+<!--<a  href="https://twitter.com/DHMZ_HR" class="fd-u-md-display--inline-block fd-u-md-display--none fd-c-button--twitter brand brand__wording--short fd-u-margin-right--2"><i class="mic fd-c-icon--twitter fd-c-icon--lg"></i></a>-->
+<a class="fd-u-md-display--inline-block fd-u-md-display--none fd-c-button--twitter brand brand__wording--short fd-u-margin-right--2" href="https://twitter.com/DHMZ_HR"><i class="mic fd-c-icon--twitter fd-c-icon--lg"></i></a>
+<a class="fd-u-md-display--inline-block fd-u-md-display--none brand brand__wording--short" href="https://meteo.hr/index_en.php" title="EN">EN</a>
+<a aria-controls="mobile-nav" aria-expanded="false" class="fd-u-md-display--inline-block fd-u-md-display--none mobile-menu-bars brand" data-effect="slide" data-toggle="collapse" href="#mobile-nav" id="mobile-nav-toggle"><i class="mic fd-c-icon--bars"></i></a>
+</div>
+</div>
+<!-- <div class="fd-l-col--12 fd-l-sm-col--12 fd-l-md-col--12 fd-l-lg-col--5 fd-l-xl-col--5 fd-u-display--none fd-u-md-display--inline-block">-->
+<div class="fd-l-col--12 fd-l-sm-col--12 fd-l-md-col--12 fd-l-lg-col--6 fd-l-xl-col--6 fd-u-display--none fd-u-md-display--inline-block">
+<ul class="fd-c-list--inline fd-c-list--inline-delimited fd-u-lg-text-align--right fd-u-margin-top--1 fd-u-lg-margin-top--5 services-nav" id="services-nav">
+<li><a href="https://meteo.hr/o_nama.php?section=naslovnica&amp;param=digitalna_pristupacnost">Digitalna pristupačnost</a></li>
+<li><a href="https://meteo.hr/o_nama.php">O nama</a></li>
+<li><a href="https://meteo.hr/index.php#objave">Objave</a></li>
+<li><a href="https://meteo.hr/o_nama.php?section=naslovnica&amp;param=adresar_kontakti">Kontakti</a></li>
+<li><a href="https://meteo.hr/o_nama.php?section=naslovnica&amp;param=pio">PiO</a></li>
+<li><a href="https://meteo.hr/index_en.php">EN</a></li>
+<li><a class="fd-c-button--twitter" href="https://twitter.com/DHMZ_HR"><i class="mic fd-c-icon--twitter fd-c-icon--lg"></i></a></li>
+<li><a href="https://www.youtube.com/channel/UCqOO-SG0P9J_eWZrI5HW-qA"><i class="mic fd-c-icon--youtube-play fd-c-icon--lg"></i></a></li>
+<li><a class="fd-c-button--rss" href="https://meteo.hr/rss.xml"><i class="mic fd-c-icon--rss-square fd-c-icon--lg"></i></a></li>
+</ul>
+</div><!-- /.fd-l-col-4 -->
+</div><!-- /.fd-l-row -->
+</div><!-- /.fd-l-container -->
+<section class="main-nav__out fd-u-display--none fd-u-md-display--block" id="main-nav__out">
+<div class="main-nav__in">
+<nav class="main-nav" id="main-nav">
+<div class="fd-l-container">
+<ul class="fd-c-nav fd-c-nav--tabs fd-c-nav--justified main-nav__list" id="main-nav__list">
+<li class="fd-c-nav__item logo-inline">
+<a class="fd-c-nav__link" href="https://meteo.hr/index.php"><img alt="DHMZ - Državni hidrometeorološki zavod" height="44" src="assets/images/logo.png" srcset="assets/images/logo.svg" width="50"/> <span>DHMZ</span></a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="https://meteo.hr/index.php">Naslovnica</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link toggle-dropdown active" data-toggle="podaci-menu" href="#">Podaci <span class="carret"></span></a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link toggle-dropdown" data-toggle="prognoza-menu" href="#">Prognoze <span class="carret"></span></a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link toggle-dropdown" data-toggle="klima-menu" href="#">Klima <span class="carret"></span></a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link toggle-dropdown" data-toggle="infrastruktura-menu" href="#">Infrastruktura<span class="carret"></span></a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link toggle-dropdown" data-toggle="istrazivanje-menu" href="#">Istraživanje i suradnja <span class="carret"></span></a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link toggle-dropdown" data-toggle="proizvodi-menu" href="#">Proizvodi i usluge <span class="carret"></span></a>
+</li>
+</ul>
+</div><!-- /.fd-l-container -->
+</nav>
+<div class="mega-menu" id="mega-menu">
+<div class="fd-l-container collapse" id="podaci-menu">
+<div class="fd-l-row">
+<div class="fd-l-col-3">
+<h4 class="mega-menu__title">Podaci o vremenu</h4>
+<ul>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=hrvatska1_n">Vrijeme u Hrvatskoj</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=amp">Automatske postaje</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=europa_n">Vrijeme u Europi</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=dnevext">Dnevne ekstremne temperature</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=more_n">Temperatura mora</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=oborina">Oborina</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=snijeg_n">Visina snijega</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=uvi">UV indeks</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=webkam">Web kamere</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Daljinska i visinska mjerenja</h4>
+<ul>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_mjerenja&amp;param=radari">Radarske slike</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_mjerenja&amp;param=satelit">Satelitske slike</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_mjerenja&amp;param=sondaze">Radiosondaže</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_mjerenja&amp;param=mg">Pojava munja</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col-3">
+<h4 class="mega-menu__title">Agrometeorološki podaci</h4>
+<ul>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_agro&amp;param=agro_stanje">Agrometeorološko stanje</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_agro&amp;param=agro_tz">Temperatura tla i zraka</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_agro&amp;param=agro_pod7">Podaci u proteklih 7 dana</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_agro&amp;param=agro_karte">Agrometeorološke karte</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_agro&amp;param=pozarind">Indeks opasnosti od šumskog požara</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Podaci kvalitete zraka</h4>
+<ul>
+<li><a href="https://meteo.hr/kvaliteta_zraka.php?section=podaci_kz">Protekla 24 sata</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Hidrološki podaci</h4>
+<ul>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_hidro&amp;param=hidro_bilten">Dnevni bilten</a></li>
+<li><a href="https://meteo.hr/podaci.php?section=podaci_hidro&amp;param=vodostaj">Podaci vodostaja</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+</div><!-- /.fd-l-row -->
+<a class="fd-c-button close-dropdown" data-toggle="podaci-menu" href="#">Zatvori <i class="mic fd-c-icon--arrow-up"></i></a>
+</div><!-- /.fd-l-container -->
+<div class="fd-l-container collapse" id="prognoza-menu">
+<div class="fd-l-row">
+<div class="fd-l-col--3">
+<h4 class="mega-menu__title">Opće prognoze</h4>
+<ul>
+<!-- <li><a href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=potres">Potresom pogođeno područje</a></li>-->
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=hrdanas">Hrvatska danas</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=zgdanas">Zagreb danas</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=hrsutra">Hrvatska sutra</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=zgsutra">Zagreb sutra</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=regije_danas">Prognoza po regijama</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=izgledi">Izgledi vremena</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=wmo">WMO prognoze</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=meteoroloski_simboli">Meteorološki simboli</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col--3">
+<h4 class="mega-menu__title">Posebne prognoze</h4>
+<ul>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_specp&amp;param=jadran">Prognoza za Jadran za nautičare</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_specp&amp;param=pomorci">Prognoza za pomorce (NAVTEX)</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_specp&amp;param=agro_p">Agrometeorološka prognoza</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_specp&amp;param=bio">Biometeorološka prognoza</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_specp&amp;param=hladnival">Upozorenje na hladne valove</a></li>
+<!--<li><a href="#"><font color="#cccccc">Hidrološka prognoza</a></font></li>-->
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col--3">
+<h4 class="mega-menu__title">Prognoze modela</h4>
+<ul>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_model&amp;param=3d">3 dana meteogrami</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_model&amp;param=ala_k">3 dana karte</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_model&amp;param=7d">7 dana meteogrami</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_model&amp;param=7d_k">7 dana karte</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_model&amp;param=web_fronte_sutra12">Sinoptička karta</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_model&amp;param=osjet_ugode">Osjet ugode</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_model&amp;param=prog_nauticari">Nautičari</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_model&amp;param=uvi_maps">UV indeks</a></li>
+<li><a href="https://meteo.hr/prognoze.php?section=prognoze_model&amp;param=meteoroloski_simboli">Meteorološki simboli</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+</div><!-- /.fd-l-row -->
+<a class="fd-c-button close-dropdown" data-toggle="prognoza-menu" href="#">Zatvori <i class="mic fd-c-icon--arrow-up"></i></a>
+</div><!-- /.fd-l-container -->
+<div class="fd-l-container collapse" id="klima-menu">
+<div class="fd-l-row">
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Klima Hrvatske</h4>
+<ul>
+<li><a href="https://meteo.hr/klima.php?section=klima_hrvatska&amp;param=k1">Opće značajke klime Hrvatske</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_hrvatska&amp;param=k1_2">Klimatske normale</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_hrvatska&amp;param=k1_4">Klimatski ekstremi</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_hrvatska&amp;param=k1_5">Karte 1931. - 1960.</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_hrvatska&amp;param=k1_6">Karte 1961. - 1990.</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_hrvatska&amp;param=k1_7">Karte 1971. - 2000.</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_hrvatska&amp;param=k1_8">Atlas vjetra</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_hrvatska&amp;param=k1_9">Digitalne klimatske karte</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Praćenje klime</h4>
+<ul>
+<li><a href="https://meteo.hr/klima.php?section=klima_pracenje&amp;param=srednja_temperatura">Srednjaci temperature</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_pracenje&amp;param=klel">Oborina i trajanje sijanja Sunca</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_pracenje&amp;param=ocjena">Ocjena mjeseca, sezone i godine</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_pracenje&amp;param=spi">Kišne i sušne prilike</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_pracenje&amp;param=k2_4">Analize sezona po tipovima vremena</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Klimatološki podaci</h4>
+<ul>
+<li><a href="https://meteo.hr/klima.php?section=klima_podaci&amp;param=k1">Srednje mjesečne vrijednosti</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_podaci&amp;param=k2_1">Ukupna količina oborine</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_podaci&amp;param=met_ext">Meteorološki ekstremi</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Buduće klimatske promjene</h4>
+<ul>
+<li><a href="https://meteo.hr/klima.php?section=klima_modeli&amp;param=klima_promjene">Klima i klimatske promjene</a></li>
+<li><a href="https://meteo.hr/klima.php?section=klima_modeli&amp;param=klima_simulacije">Simulacije klimatskih modela</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+</div><!-- /.fd-l-row -->
+<a class="fd-c-button close-dropdown" data-toggle="klima-menu" href="#">Zatvori <i class="mic fd-c-icon--arrow-up"></i></a>
+</div><!-- /.fd-l-container -->
+<div class="fd-l-container collapse" id="infrastruktura-menu">
+<div class="fd-l-row">
+<div class="fd-l-col-3">
+<h4 class="mega-menu__title">Mreže postaja</h4>
+<ul>
+<li><a href="https://meteo.hr/infrastruktura.php?section=mreze_postaja&amp;param=pmm">Prizemna meteorološka motrenja</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=mreze_postaja&amp;param=vmm">Visinska meteorološka mjerenja</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=mreze_postaja&amp;param=dmm">Daljinska meteorološka mjerenja</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=mreze_postaja&amp;param=hm">Hidrološke mreže</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=mreze_postaja&amp;param=mkz">Mreža kvalitete zraka</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Prognostički modeli</h4>
+<ul>
+<li><a href="https://meteo.hr/infrastruktura.php?section=prognosticki_modeli&amp;param=aladin">ALADIN</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=prognosticki_modeli&amp;param=dwd_icon">DWD ICON-EU</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=prognosticki_modeli&amp;param=ecmwf_ifs">ECMWF IFS</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=prognosticki_modeli&amp;param=regcm">RegCM</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=prognosticki_modeli&amp;param=sava_sm">Sava SM2</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=prognosticki_modeli&amp;param=wasp">WA<sup>s</sup>P</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=prognosticki_modeli&amp;param=wrf">WRF</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Sustavi upozorenja</h4>
+<ul>
+<li><a href="https://meteo.hr/infrastruktura.php?section=sustavi_upozorenja&amp;param=anemoalarm">ANEMO-ALARM</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=sustavi_upozorenja&amp;param=meteoalarm">METEOALARM</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=sustavi_upozorenja&amp;param=efas">EFAS</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=sustavi_upozorenja&amp;param=sava_sm_upozorenja">Sava SM2</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=sustavi_upozorenja&amp;param=seeffgs">SEEFFGS</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Laboratoriji</h4>
+<ul>
+<li><a href="https://meteo.hr/infrastruktura.php?section=laboratoriji&amp;param=kem_lab">Kemijski laboratorij</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=laboratoriji&amp;param=kz_lab">Laboratorij za mjerenje kvalitete zraka</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=laboratoriji&amp;param=soul">Umjerni laboratorij</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Knjižnica</h4>
+<ul>
+<li><a href="http://library.foi.hr/dhmz/index.php">Knjižnica DHMZ-a</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=knjiznica_dhmz&amp;param=znanstveno_strucni_radovi">Znanstveno-stručni radovi</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=knjiznica_dhmz&amp;param=knjiznica_publikacije">Publikacije</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=knjiznica_dhmz&amp;param=knjiznica_naputci_prirucnici">Naputci i priručnici</a></li>
+<li><a href="https://meteo.hr/infrastruktura.php?section=knjiznica_dhmz&amp;param=knjiznica_aaiedu">AAI@EduHr</a></li>
+</ul>
+</div><!-- /.fd-l-col-2 -->
+</div><!-- /.fd-l-row -->
+<a class="fd-c-button close-dropdown" data-toggle="infrastruktura-menu" href="#">Zatvori <i class="mic fd-c-icon--arrow-up"></i></a>
+</div><!-- /.fd-l-container -->
+<div class="fd-l-container collapse" id="istrazivanje-menu">
+<div class="fd-l-row">
+<div class="fd-l-col--3">
+<h4 class="mega-menu__title">Istraživanje i razvoj</h4>
+<ul>
+<li><a href="https://meteo.hr/istrazivanje.php?section=istrazivanje&amp;param=istrazivanje_razvoj">Istraživanje i razvoj</a></li>
+<li><a href="https://meteo.hr/istrazivanje.php?section=istrazivanje&amp;param=znanstveno_strucni_radovi">Znanstveno-stručni radovi</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col--3">
+<h4 class="mega-menu__title">Projekti</h4>
+<ul>
+<li><a href="https://meteo.hr/istrazivanje.php?section=projekti&amp;param=projekti_u_tijeku">Projekti u tijeku</a></li>
+<li><a href="https://meteo.hr/istrazivanje.php?section=projekti&amp;param=zavrseni_projekti">Završeni projekti</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col--3">
+<h4 class="mega-menu__title">Suradnja</h4>
+<ul>
+<li><a href="https://meteo.hr/istrazivanje.php?section=suradnja&amp;param=moa">Međunarodne organizacije i asocijacije</a></li>
+<li><a href="https://meteo.hr/istrazivanje.php?section=suradnja&amp;param=medjunarodni_programi">Međunarodni programi</a></li>
+<li><a href="https://meteo.hr/istrazivanje.php?section=suradnja&amp;param=domaca_suradnja">Domaća suradnja</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+</div><!-- /.fd-l-row -->
+<a class="fd-c-button close-dropdown" data-toggle="istrazivanje-menu" href="#">Zatvori <i class="mic fd-c-icon--arrow-up"></i></a>
+</div><!-- /.fd-l-container -->
+<div class="fd-l-container collapse" id="proizvodi-menu">
+<div class="fd-l-row">
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Podaci i produkti</h4>
+<ul>
+<li><a href="https://meteo.hr/proizvodi.php?section=podaci&amp;param=meteorologija">Meteorološki</a></li>
+<li><a href="https://meteo.hr/proizvodi.php?section=podaci&amp;param=hidrologija">Hidrološki</a></li>
+<li><a href="https://meteo.hr/proizvodi.php?section=podaci&amp;param=kvaliteta_zraka">Kvaliteta zraka</a></li>
+<li><a href="https://meteo.hr/proizvodi.php?section=podaci&amp;param=xml_korisnici">XML za korisnike</a></li>
+<li><a href="https://meteo.hr/proizvodi/PopisSkupovaPodatakaDHMZa.docx">Popis skupova podataka DHMZ-a</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Proizvodi i usluge</h4>
+<ul>
+<li><a href="https://meteo.hr/proizvodi.php?section=proizvodi_usluge&amp;param=proizvodi">Proizvodi</a></li>
+<li><a href="https://meteo.hr/proizvodi.php?section=proizvodi_usluge&amp;param=umjeravanje">Umjeravanje</a></li>
+<li><a href="https://meteo.hr/proizvodi.php?section=proizvodi_usluge&amp;param=proizvodi_studije">Studije</a></li>
+<!--<li><a href="#">Ostale usluge</a></li>-->
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col-3">
+<h4 class="mega-menu__title">Katalog i zahtjevi</h4>
+<ul>
+<li><a href="https://klima.hr/razno/katalog_i_cjenikDHMZ.pdf">Katalog i cjenik</a></li>
+<li><a href="https://meteo.hr/proizvodi.php?section=katalog_zahtjevi&amp;param=zahtjev_podaci_usluge">Zahtjevi za podacima i uslugama</a></li>
+<li><a href="https://meteo.hr/proizvodi.php?section=katalog_zahtjevi&amp;param=zahtjev_posjet">Zahtjevi za posjet DHMZ-u</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col-3">
+<h4 class="mega-menu__title">Istraživanja i inovacije</h4>
+<ul>
+<li><a href="https://meteo.hr/proizvodi.php?section=istrazivanja_inovacije&amp;param=proizvodi_istrazivanja_inovacije">Istraživanja i inovacije u DHMZ-u</a></li>
+<li><a href="https://meteo.hr/proizvodi.php?section=istrazivanja_inovacije&amp;param=proizvodi_aplikacije">Aplikacije</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+<div class="fd-l-col">
+<h4 class="mega-menu__title">Publikacije</h4>
+<ul>
+<li><a href="https://meteo.hr/proizvodi.php?section=publikacije&amp;param=publikacije_publikacije_dhmz">Publikacije DHMZ-a</a></li>
+<li><a href="https://meteo.hr/proizvodi.php?section=publikacije&amp;param=publikacije_naputci_prirucnici_dhmz">Naputci i priručnici DHMZ-a</a></li>
+</ul>
+</div><!-- /.fd-l-col-3 -->
+</div><!-- /.fd-l-row -->
+<a class="fd-c-button close-dropdown" data-toggle="proizvodi-menu" href="#">Zatvori <i class="mic fd-c-icon--arrow-up"></i></a>
+</div><!-- /.fd-l-container -->
+</div><!--/.mega-menu-->
+</div><!--/.main-nav__in-->
+</section>
+</header>
+<nav class="mobile-nav collapse" id="mobile-nav">
+<div class="fd-l-container">
+<ul class="fd-c-nav fd-u-flex--column" id="mobile-nav-list">
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="https://meteo.hr/index.php">Naslovnica</a>
+</li>
+<li class="fd-c-nav__item active">
+<a class="fd-c-nav__link" href="https://meteo.hr/podaci.php?section=podaci_vrijeme&amp;prikaz=abc">Podaci</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="https://meteo.hr/prognoze.php?section=prognoze_metp&amp;param=hrdanas">Prognoze</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="https://meteo.hr/klima.php?section=klima_pracenje&amp;param=srednja_temperatura">Klima</a>
+</li>
+<!--<li class="fd-c-nav__item">
+                    <a href="#" class="fd-c-nav__link"><font color="#cccccc">Proizvodi i usluge</font></a>
+                </li>-->
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="https://meteo.hr/mobile_objave.php?id=objave">Objave</a>
+</li>
+<!--  <li class="fd-c-nav__item">
+                    <a href="https://meteo.hr/mobile_objave.php?id=najave" class="fd-c-nav__link">Najave</a>
+                </li>-->
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="https://meteo.hr/mobile_objave.php?id=natjecaji">Natječaji</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="https://meteo.hr/o_nama.php?section=naslovnica">O nama</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="https://meteo.hr/o_nama.php?section=naslovnica&amp;param=adresar_kontakti_mobile">Kontakti</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="https://meteo.hr/proizvodi.php?section=katalog_zahtjevi&amp;param=zahtjev_podaci_usluge">Zahtjevi za podacima i uslugama</a>
+</li>
+<!-- <li class="fd-c-nav__item">
+                    <a href="index_en.php" class="fd-c-nav__link">English</a>
+                </li>-->
+<!-- <li class="fd-c-nav__item">
+                    <a data-toggle="collapse" data-effect="slide" href="#mobile-nav" aria-expanded="true" aria-controls="mobile-nav" class="fd-c-nav__link">Zatvori <i class="mic fd-c-icon--angle-up fd-u-float--right"></i></a>-->
+</ul>
+</div><!-- /.fd-l-container -->
+</nav>
+<!-- dio koji se ubacuje u svim stranicama, crvena lajna -->
+<section class="fd-u-fill--secondary fd-u-color--white fd-u-padding-y--1 fd-u-lg-padding-y--1 fd-u-font-size--small fd-u-md-font-size--base last-weather-alert">
+<div class="fd-l-container">
+<div class="fd-l-row fd-u-align-items--center fd-u-flex-wrap--nowrap weather-alert">
+<div class="fd-l-col--auto fd-u-display--none fd-u-md-display--inline-block weather-alert__icon">
+<i class="mic fd-c-icon--2x fd-c-icon--exclamation-triangle"></i>
+</div>
+<div class="fd-l-col--auto fd-u-display--none fd-u-xl-display--inline-block weather-alert__title">
+<strong><a href="naslovnica-upozorenja.php?tab=upozorenja" style="color: #ffffff;">Upozorenja</a></strong>
+</div>
+<div class="fd-l-col--auto weather-alert__info">
+<img alt="vjetar" class="fd-c-iconsvg fd-c-iconsvg--alert" src="assets/images/icons/alerts/vjetar-white.svg"/>
+</div>
+<div class="fd-l-col--auto fd-u-margin-left--auto weather-alert__button">
+<a class="fd-c-button fd-c-button--small fd-u-text-transform--uppercase fd-u-font-weight--bold btn-dark-trans" href="naslovnica-upozorenja.php?tab=upozorenja">Otvori</a>
+</div>
+</div><!--/.fd-l-row-->
+</div><!-- /.fd-l-container -->
+</section><!-- /.last-weather-alert -->
+<section class="fd-u-fill--primary-lighter featured-nav" id="featured-nav__out">
+<div class="fd-l-container">
+<div class="fd-u-display--block fd-u-md-display--none fd-u-padding-y--1 featured-nav__header">
+<div class="fd-l-row fd-u-align-items--center">
+<div class="fd-l-col--10">
+<span class="fd-u-color--primary">Vrijeme u Europi</span>
+</div><!-- /.fd-l-col--10 -->
+<div class="fd-l-col--2 fd-u-text-align--right">
+<a aria-controls="featured-nav__wrap" aria-expanded="false" class="mobile-menu-bars1" data-effect="slide" data-toggle="collapse" href="#featured-nav__wrap" id="featured-nav-toggle"><i class="mic fd-c-icon--bars"></i></a>
+</div><!-- /.fd-l-col--2 -->
+</div><!--/.fd-l-row-->
+</div><!-- /.featured-nav__header -->
+<div class="collapse fd-u-md-display--none" id="featured-nav__wrap">
+<ul class="fd-c-nav fd-c-nav--tabs fd-c-nav--justified fd-u-flex--column fd-u-md-flex--row featured-nav__list" id="featured-nav__list">
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=hrvatska1_n&amp;el=">Vrijeme u Hrvatskoj</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=amp&amp;el=">Automatske postaje</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link active" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=europa_n&amp;el=">Vrijeme u Europi</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=dnevext&amp;el=tx">Dnevne ekstremne temperature</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=more_n&amp;el=">Temperatura mora</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=oborina&amp;el=">Oborina</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=snijeg_n&amp;el=">Visina snijega</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=webkam&amp;el=">Web kamere</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_mjerenja&amp;param=radari&amp;el=kompozit">Radarske slike</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_mjerenja&amp;param=satelit&amp;el=MSG3">Satelitske slike </a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_mjerenja&amp;param=mg&amp;el=hrvatska">Pojava munja</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_agro&amp;param=pozarind&amp;el=">Indeks opasnosti od šumskog požara</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/kvaliteta_zraka.php?section=podaci_kz&amp;param=&amp;el=">Kvaliteta zraka</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_hidro&amp;param=hidro_bilten&amp;el=">Dnevni hidrološki izvještaj</a>
+</li>
+<li class="fd-c-nav__item">
+<a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_hidro&amp;param=vodostaj&amp;el=">Podaci vodostaja</a>
+</li>
+</ul>
+</div><!-- /#featured-nav__wrap -->
+</div><!-- /.fd-l-container -->
+</section>
+<section class="fd-l-col--12 fd-u-border-bottom--1 fd-u-border--gray-lighter fd-u-padding-y--1 fd-u-margin-bottom--2 fd-u-display--none fd-u-md-display--inline-block" id="page-meta">
+<div class="fd-l-container">
+<div class="fd-l-row">
+<div class="fd-l-col--12 fd-l-md-col--8 fd-l-lg-col--9">
+<ol class="fd-c-breadcrumb fd-u-margin-bottom--0">
+<li class="fd-c-breadcrumb__item"><a href="index.php">Naslovnica</a></li>
+<li class="fd-c-breadcrumb__item"><a class="toggle-dropdown" data-toggle="podaci-menu" href="#">Podaci</a></li>
+<li class="fd-c-breadcrumb__item"><a class="toggle-dropdown" data-toggle="podaci-menu" href="#">Podaci o vremenu</a></li>
+<!--<li class="fd-c-breadcrumb__item">Vrijeme u Europi</li>-->
+</ol>
+</div>
+<!-- <div class="fd-l-col--12 fd-l-md-col--4 fd-l-lg-col--3 fd-u-text-align--right fd-u-display--none fd-u-md-display--inline-block">
+                    <div class="fd-u-display--flex fd-u-justify-content--end fd-u-align-items--center share-widget">
+                        <span class="fd-u-padding-right--1">Podijeli stranicu</span>
+                        <span><div class="sharethis-inline-share-buttons"></div></span>
+                    </div>
+                </div>-->
+</div><!-- /.fd-l-row -->
+</div><!-- /.fd-l-container -->
+</section>
+<section class="fd-u-padding-y--1" id="main-content">
+<div class="fd-l-container">
+<div class="fd-l-row">
+<div class="fd-l-col--12 fd-l-md-col--8 fd-l-lg-col--9" id="primary">
+<div class="glavni__content">
+<div class="fd-u-text-align--left">
+<h4>Vrijeme u Europi 27.12.2022. u 18 UTC</h4>
+<hr/>
+</div></div>
+<div class="fd-c-table--responsive fd-u-display--block fd-u-md-display--none">
+<table class="fd-c-table table--aktualni-podaci sortable" id="table-aktualni-podaci">
+<thead>
+<tr>
+<th class="fd-u-text-align--left" scope="col" width="25%">Postaja</th>
+<th class="sorttable_nosort" scope="col" width="10%">Smjer</th>
+<th scope="col" width="20%">Brzina (m/s)</th>
+<th scope="col" width="20%">Temp. (°C)</th>
+<th class="sorttable_nosort" scope="col" width="25%">Stanje</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="fd-u-text-align--left">Amsterdam
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">8.0</span>
+</td>
+<td>7.0</td>
+<td>
+<span class="spacer">potpuno oblačno, vjetrovito</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Ankara
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>1.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Atena
+                                </td>
+<td>
+<span class="spacer">NE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>14.0</td>
+<td>
+<span class="spacer">-</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Barcelona
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>14.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Beč
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>4.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Beograd
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>8.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Berlin
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>4.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bern
+                                </td>
+<td>
+<span class="spacer">N</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>4.0</td>
+<td>
+<span class="spacer">-</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bonn
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>5.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bratislava
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>6.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Brno
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>3.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bruxelles
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>6.0</td>
+<td>
+<span class="spacer">pretežno vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Budimpešta
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>3.0</td>
+<td>
+<span class="spacer">-</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bukurešt
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>8.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Cork
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>7.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Dublin
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>8.0</td>
+<td>
+<span class="spacer">potpuno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Edinburgh
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>3.0</td>
+<td>
+<span class="spacer">slaba rosulja</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Firenca
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>13.0</td>
+<td>
+<span class="spacer">umjereno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Frankfurt
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>4.0</td>
+<td>
+<span class="spacer">potpuno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Genova
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>14.0</td>
+<td>
+<span class="spacer">umjereno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Glasgow
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>1.0</td>
+<td>
+<span class="spacer">potpuno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Graz
+                                </td>
+<td>
+<span class="spacer">N</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>5.0</td>
+<td>
+<span class="spacer">umjereno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Helsinki
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">7.0</span>
+</td>
+<td>1.0</td>
+<td>
+<span class="spacer">slab pljusak kiše</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Istanbul
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>12.0</td>
+<td>
+<span class="spacer">umjereno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Kiev
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>3.0</td>
+<td>
+<span class="spacer">potpuno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Kišinjev
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>6.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Kopenhagen
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>2.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Krakov
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>3.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Larnaca
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>11.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">London-Heathrow
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">7.0</span>
+</td>
+<td>9.0</td>
+<td>
+<span class="spacer">slaba kiša</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Luxemburg
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>3.0</td>
+<td>
+<span class="spacer">pretežno vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Ljubljana
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>9.0</td>
+<td>
+<span class="spacer">umjereno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Madrid
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>11.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Maribor
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>6.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Milano
+                                </td>
+<td>
+<span class="spacer">NE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>7.0</td>
+<td>
+<span class="spacer">mjestimična magla</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Moskva
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>-3.0</td>
+<td>
+<span class="spacer">slab snijeg</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Mostar
+                                </td>
+<td>
+<span class="spacer">N</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>12.0</td>
+<td>
+<span class="spacer">potpuno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">München
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>5.0</td>
+<td>
+<span class="spacer">potpuno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Napulj
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>15.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Nica
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>12.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Novi Sad
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>7.0</td>
+<td>
+<span class="spacer">potpuno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Oslo
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>-4.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Palermo
+                                </td>
+<td>
+<span class="spacer">NE</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>16.0</td>
+<td>
+<span class="spacer">-</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Paris-aerodrom
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>7.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Pečuh
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>6.0</td>
+<td>
+<span class="spacer">-</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Podgorica
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>13.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Prag
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>4.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Reykjavik
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>-4.0</td>
+<td>
+<span class="spacer">umjereno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Rim
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>12.0</td>
+<td>
+<span class="spacer">umjereno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Salzburg
+                                </td>
+<td>
+<span class="spacer">N</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>3.0</td>
+<td>
+<span class="spacer">umjereno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Sarajevo
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>7.0</td>
+<td>
+<span class="spacer">slaba kiša</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Skopje
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>2.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Sofija
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>9.0</td>
+<td>
+<span class="spacer">umjereno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Stockholm
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>0.0</td>
+<td>
+<span class="spacer">-</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Strasbourg
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>3.0</td>
+<td>
+<span class="spacer">-</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Tallinn
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>2.0</td>
+<td>
+<span class="spacer">-</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Tirana
+                                </td>
+<td>
+<span class="spacer">C</span></td>
+<td><span class="spacer">0.0</span>
+</td>
+<td>13.0</td>
+<td>
+<span class="spacer">pretežno vedro</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Toulouse
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>11.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Trst
+                                </td>
+<td>
+<span class="spacer">NE</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>10.0</td>
+<td>
+<span class="spacer">potpuno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Tuzla
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>6.0</td>
+<td>
+<span class="spacer">-</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Varšava
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>4.0</td>
+<td>
+<span class="spacer">slab pljusak kiše</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Venecija
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>9.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Vilnius
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>2.0</td>
+<td>
+<span class="spacer">slaba kiša</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Zagreb
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>9.0</td>
+<td>
+<span class="spacer">potpuno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Zürich
+                                </td>
+<td>
+<span class="spacer">C</span></td>
+<td><span class="spacer">0.0</span>
+</td>
+<td>4.0</td>
+<td>
+<span class="spacer">pretežno oblačno</span>
+</td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Ženeva
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>6.0</td>
+<td>
+<span class="spacer">vedro</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div><!-- /.table-responsive -->
+<div class="fd-c-table--responsive fd-u-display--none fd-u-md-display--block">
+<table class="fd-c-table1 table--aktualni-podaci sortable" id="table-aktualni-podaci">
+<thead>
+<tr>
+<th class="fd-u-text-align--left" scope="col" width="20%">Postaja</th>
+<th class="sorttable_nosort" scope="col" width="11%">Vjetar<br/>smjer</th>
+<th scope="col" width="11%">Vjetar<br/> brzina (m/s)</th>
+<th scope="col" width="11%">Temperatura<br/> zraka (°C)</th>
+<th class="sorttable_nosort" scope="col" width="11%">Relativna<br/> vlažnost (%)</th>
+<th class="sorttable_nosort" scope="col" width="11%">Tlak<br/> zraka (hPa)</th>
+<th class="sorttable_nosort" scope="col" width="11%">Tendencija<br/> tlaka (hPa/3h)</th>
+<th class="sorttable_nosort" scope="col" width="14%">Stanje<br/> vremena</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="fd-u-text-align--left">Amsterdam
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">8.0</span>
+</td>
+<td>7.0</td>
+<td>85</td>
+<td>1019.2</td>
+<td>-</td>
+<td>
+                                    potpuno oblačno, vjetrovito
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Ankara
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>1.0</td>
+<td>85</td>
+<td>1029.5</td>
+<td><div style="color:#047eb7">+0.3</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Atena
+                                </td>
+<td>
+<span class="spacer">NE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>14.0</td>
+<td>90</td>
+<td>1024.8</td>
+<td><div style="color:#047eb7">+1.0</div></td>
+<td>
+                                    -
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Barcelona
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>14.0</td>
+<td>85</td>
+<td>1029.1</td>
+<td><div style="color:#047eb7">+0.6</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Beč
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>4.0</td>
+<td>73</td>
+<td>1030.3</td>
+<td><div style="color:#047eb7">+0.8</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Beograd
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>8.0</td>
+<td>100</td>
+<td>1030.1</td>
+<td><div style="color:#047eb7">+1.8</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Berlin
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>4.0</td>
+<td>82</td>
+<td>1023.7</td>
+<td><div style="color:#047eb7">+0.3</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bern
+                                </td>
+<td>
+<span class="spacer">N</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>4.0</td>
+<td>97</td>
+<td>1029.8</td>
+<td><div style="color:#FF0000">-0.6</div></td>
+<td>
+                                    -
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bonn
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>5.0</td>
+<td>78</td>
+<td>1025.6</td>
+<td><div style="color:#FF0000">-0.3</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bratislava
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>6.0</td>
+<td>59</td>
+<td>1029.8</td>
+<td><div style="color:#047eb7">+0.3</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Brno
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>3.0</td>
+<td>77</td>
+<td>1029.5</td>
+<td><div style="color:#047eb7">+0.6</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bruxelles
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>6.0</td>
+<td>83</td>
+<td>1023.0</td>
+<td><div style="color:#FF0000">-1.0</div></td>
+<td>
+                                    pretežno vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Budimpešta
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>3.0</td>
+<td>60</td>
+<td>1030.1</td>
+<td><div style="color:#047eb7">+1.3</div></td>
+<td>
+                                    -
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Bukurešt
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>8.0</td>
+<td>84</td>
+<td>1022.0</td>
+<td><div style="color:#047eb7">+2.1</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Cork
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>7.0</td>
+<td>95</td>
+<td>1008.3</td>
+<td><div style="color:#047eb7">+1.4</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Dublin
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>8.0</td>
+<td>83</td>
+<td>1004.1</td>
+<td>0.0</td>
+<td>
+                                    potpuno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Edinburgh
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>3.0</td>
+<td>97</td>
+<td>999.5</td>
+<td><div style="color:#FF0000">-2.3</div></td>
+<td>
+                                    slaba rosulja
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Firenca
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>13.0</td>
+<td>86</td>
+<td>1025.8</td>
+<td><div style="color:#047eb7">+0.8</div></td>
+<td>
+                                    umjereno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Frankfurt
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>4.0</td>
+<td>87</td>
+<td>1027.9</td>
+<td><div style="color:#FF0000">-0.5</div></td>
+<td>
+                                    potpuno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Genova
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>14.0</td>
+<td>88</td>
+<td>1025.0</td>
+<td><div style="color:#047eb7">+0.7</div></td>
+<td>
+                                    umjereno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Glasgow
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>1.0</td>
+<td>97</td>
+<td>999.6</td>
+<td><div style="color:#FF0000">-2.2</div></td>
+<td>
+                                    potpuno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Graz
+                                </td>
+<td>
+<span class="spacer">N</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>5.0</td>
+<td>78</td>
+<td>1030.2</td>
+<td><div style="color:#047eb7">+1.8</div></td>
+<td>
+                                    umjereno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Helsinki
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">7.0</span>
+</td>
+<td>1.0</td>
+<td>94</td>
+<td>999.1</td>
+<td>-</td>
+<td>
+                                    slab pljusak kiše
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Istanbul
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>12.0</td>
+<td>74</td>
+<td>1026.5</td>
+<td><div style="color:#047eb7">+0.6</div></td>
+<td>
+                                    umjereno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Kiev
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>3.0</td>
+<td>83</td>
+<td>1015.9</td>
+<td><div style="color:#047eb7">+3.1</div></td>
+<td>
+                                    potpuno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Kišinjev
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>6.0</td>
+<td>88</td>
+<td>1020.9</td>
+<td><div style="color:#047eb7">+1.6</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Kopenhagen
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">6.0</span>
+</td>
+<td>2.0</td>
+<td>90</td>
+<td>1016.6</td>
+<td><div style="color:#047eb7">+0.1</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Krakov
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>3.0</td>
+<td>73</td>
+<td>1027.4</td>
+<td><div style="color:#047eb7">+1.2</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Larnaca
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>11.0</td>
+<td>67</td>
+<td>1026.1</td>
+<td><div style="color:#047eb7">+1.3</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">London-Heathrow
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">7.0</span>
+</td>
+<td>9.0</td>
+<td>89</td>
+<td>1015.9</td>
+<td><div style="color:#FF0000">-1.7</div></td>
+<td>
+                                    slaba kiša
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Luxemburg
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>3.0</td>
+<td>98</td>
+<td>1027.6</td>
+<td><div style="color:#FF0000">-0.8</div></td>
+<td>
+                                    pretežno vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Ljubljana
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>9.0</td>
+<td>78</td>
+<td>1029.4</td>
+<td><div style="color:#047eb7">+1.7</div></td>
+<td>
+                                    umjereno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Madrid
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>11.0</td>
+<td>75</td>
+<td>1030.0</td>
+<td><div style="color:#047eb7">+0.1</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Maribor
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>6.0</td>
+<td>71</td>
+<td>1030.7</td>
+<td><div style="color:#047eb7">+1.8</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Milano
+                                </td>
+<td>
+<span class="spacer">NE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>7.0</td>
+<td>100</td>
+<td>1026.5</td>
+<td><div style="color:#047eb7">+1.2</div></td>
+<td>
+                                    mjestimična magla
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Moskva
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>-3.0</td>
+<td>96</td>
+<td>1014.1</td>
+<td><div style="color:#FF0000">  -1.9</div></td>
+<td>
+                                    slab snijeg
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Mostar
+                                </td>
+<td>
+<span class="spacer">N</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>12.0</td>
+<td>95</td>
+<td>1026.3</td>
+<td><div style="color:#047eb7">+0.9</div></td>
+<td>
+                                    potpuno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">München
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>5.0</td>
+<td>82</td>
+<td>1029.7</td>
+<td><div style="color:#FF0000">-0.7</div></td>
+<td>
+                                    potpuno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Napulj
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>15.0</td>
+<td>83</td>
+<td>1027.4</td>
+<td><div style="color:#047eb7">+0.8</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Nica
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>12.0</td>
+<td>92</td>
+<td>1025.5</td>
+<td><div style="color:#047eb7">+1.0</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Novi Sad
+                                </td>
+<td>
+<span class="spacer">NW</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>7.0</td>
+<td>69</td>
+<td>1030.6</td>
+<td><div style="color:#047eb7">+1.8</div></td>
+<td>
+                                    potpuno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Oslo
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>-4.0</td>
+<td>71</td>
+<td>-</td>
+<td><div style="color:#047eb7">+1.3</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Palermo
+                                </td>
+<td>
+<span class="spacer">NE</span></td>
+<td><span class="spacer">3.0</span>
+</td>
+<td>16.0</td>
+<td>81</td>
+<td>1027.7</td>
+<td><div style="color:#047eb7">+0.7</div></td>
+<td>
+                                    -
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Paris-aerodrom
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>7.0</td>
+<td>89</td>
+<td>1026.0</td>
+<td><div style="color:#FF0000">  -0.9</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Pečuh
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>6.0</td>
+<td>58</td>
+<td>1031.5</td>
+<td><div style="color:#047eb7">+2.0</div></td>
+<td>
+                                    -
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Podgorica
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>13.0</td>
+<td>81</td>
+<td>1027.0</td>
+<td><div style="color:#047eb7">+0.8</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Prag
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>4.0</td>
+<td>74</td>
+<td>1028.6</td>
+<td><div style="color:#047eb7">+0.2</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Reykjavik
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>-4.0</td>
+<td>91</td>
+<td> 993.8</td>
+<td><div style="color:#047eb7">+0.6</div></td>
+<td>
+                                    umjereno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Rim
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>12.0</td>
+<td>96</td>
+<td>1026.7</td>
+<td><div style="color:#047eb7">+0.7</div></td>
+<td>
+                                    umjereno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Salzburg
+                                </td>
+<td>
+<span class="spacer">N</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>3.0</td>
+<td>92</td>
+<td>1031.2</td>
+<td><div style="color:#FF0000">-0.2</div></td>
+<td>
+                                    umjereno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Sarajevo
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>7.0</td>
+<td>84</td>
+<td>1025.4</td>
+<td><div style="color:#047eb7">+2.7</div></td>
+<td>
+                                    slaba kiša
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Skopje
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>2.0</td>
+<td>94</td>
+<td>1028.4</td>
+<td><div style="color:#047eb7">+1.4</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Sofija
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>9.0</td>
+<td>69</td>
+<td>1025.5</td>
+<td><div style="color:#047eb7">+0.6</div></td>
+<td>
+                                    umjereno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Stockholm
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">5.0</span>
+</td>
+<td>0.0</td>
+<td>86</td>
+<td>1002.4</td>
+<td><div style="color:#047eb7">+3.1</div></td>
+<td>
+                                    -
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Strasbourg
+                                </td>
+<td>
+<span class="spacer">SE</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>3.0</td>
+<td>93</td>
+<td>1029.2</td>
+<td><div style="color:#FF0000">  -0.7</div></td>
+<td>
+                                    -
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Tallinn
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>2.0</td>
+<td>92</td>
+<td>1000.8</td>
+<td><div style="color:#FF0000">-0.3</div></td>
+<td>
+                                    -
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Tirana
+                                </td>
+<td>
+<span class="spacer">C</span></td>
+<td><span class="spacer">0.0</span>
+</td>
+<td>13.0</td>
+<td>100</td>
+<td>1025.3</td>
+<td><div style="color:#047eb7">+0.3</div></td>
+<td>
+                                    pretežno vedro
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Toulouse
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>11.0</td>
+<td>95</td>
+<td>1029.2</td>
+<td><div style="color:#FF0000">  -0.4</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Trst
+                                </td>
+<td>
+<span class="spacer">NE</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>10.0</td>
+<td>99</td>
+<td>1026.4</td>
+<td><div style="color:#047eb7">+0.4</div></td>
+<td>
+                                    potpuno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Tuzla
+                                </td>
+<td>
+<span class="spacer">S</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>6.0</td>
+<td>78</td>
+<td>1033.3</td>
+<td><div style="color:#047eb7">+0.6</div></td>
+<td>
+                                    -
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Varšava
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>4.0</td>
+<td>82</td>
+<td>1021.9</td>
+<td><div style="color:#047eb7">+1.1</div></td>
+<td>
+                                    slab pljusak kiše
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Venecija
+                                </td>
+<td>
+<span class="spacer">W</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>9.0</td>
+<td>92</td>
+<td>1027.0</td>
+<td><div style="color:#047eb7">+1.0</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Vilnius
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">4.0</span>
+</td>
+<td>2.0</td>
+<td>87</td>
+<td>1014.2</td>
+<td><div style="color:#047eb7">+0.5</div></td>
+<td>
+                                    slaba kiša
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Zagreb
+                                </td>
+<td>
+<span class="spacer">E</span></td>
+<td><span class="spacer">1.0</span>
+</td>
+<td>9.0</td>
+<td>62</td>
+<td>1030.5</td>
+<td><div style="color:#047eb7">+1.9</div></td>
+<td>
+                                    potpuno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Zürich
+                                </td>
+<td>
+<span class="spacer">C</span></td>
+<td><span class="spacer">0.0</span>
+</td>
+<td>4.0</td>
+<td>95</td>
+<td>1030.1</td>
+<td><div style="color:#FF0000">-0.9</div></td>
+<td>
+                                    pretežno oblačno
+                                </td>
+</tr>
+<tr>
+<td class="fd-u-text-align--left">Ženeva
+                                </td>
+<td>
+<span class="spacer">SW</span></td>
+<td><span class="spacer">2.0</span>
+</td>
+<td>6.0</td>
+<td>73</td>
+<td>1030.0</td>
+<td><div style="color:#047eb7">+0.3</div></td>
+<td>
+                                    vedro
+                                </td>
+</tr>
+</tbody>
+</table>
+</div><!-- /.table-responsive -->
+<div class="fd-l-row fd-u-padding-top--2">
+<div class="fd-l-col--12 fd-l-md-col--9 fd-l-lg-col--10">
+<table class="fd-c-table1 table--aktualni-podaci" style="width:300px">
+<tr>
+<td width="30%"></td><td style="text-align:left">klasična motrenja</td>
+</tr>
+<!--	<tr style="background-color: #f7fafd;color: #333333;"><td width="30%"></td><td style="text-align:left">automatska mjerenja</td></tr>-->
+<tr><td width="30%"><sup>A</sup></td><td style="text-align:left">automatska mjerenja</td></tr>
+<tr><td width="30%">*</td><td style="text-align:left">tlak na razini postaje</td></tr>
+<tr><td width="30%">NP</td><td style="text-align:left">nacionalni park</td></tr>
+</table>
+</div><!-- /.fd-l-col--10 -->
+</div>
+<p><br/>
+</p><div class="glavni__content fd-u-text-align--justify fd-u-margin-top--0 fd-u-display--none fd-u-md-display--block">
+<h5 class="fd-u-margin-bottom--1" style="font-weight: bold;">NAOBLAKA</h5>
+<div align="justify">(cloudiness, Bewölkung), kao količina oblaka koja pokriva nebo, se procjenjuje
+u osminama ili desetinama neba (klimatologija). Potpuno vedro je prikazano
+s 0, a potpuno oblačno s 8/8 odnosno 10/10. Pri određivanju razdiobe naoblake
+postoje vedri dani kad je naoblaka &lt;2/8 (&lt;=2.5/10), odnosno oblačni
+dani s naoblakom &gt;6/8 (&gt;=7.5/10). Općenito, stanje neba (sky state; Himmelsansicht)
+se može prikazati određenom količinom naoblake.</div>
+<div class="glavni__content fd-l-col--12 fd-l-lg-col--8 fd-u-margin-top--2">
+<table class="borderless">
+<thead>
+<tr><th scope="col">stanje neba (1/8) *</th><th scope="col"> Opis naoblake</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>vedro (clear; wolkenlos, heiter)</td></tr>
+<tr><td>1,2</td><td>pretežno vedro (mainly clear; bewölkt)</td></tr>
+<tr><td>3, 4, 5</td><td>umjereno oblačno (partly cloudy; bewölkt)</td></tr>
+<tr><td>6, 7</td><td>pretežno oblačno (cloudy, bewölkt)</td></tr>
+<tr><td>8</td><td>potpuno oblačno (overcast; bedeckt)</td></tr>
+<tr><td>9</td><td>u oblaku (in cloud; in Wolke), nebo se ne vidi</td></tr>
+</tbody>
+</table>
+</div>
+<p></p><h5 class="fd-u-margin-bottom--1" style="font-weight: bold;">VJETAR</h5>
+Prema međunarodnim oznakama smjera od kuda vjetar puše koristi se:
+  
+<div class="glavni__content fd-l-col--12 fd-l-lg-col--8 fd-u-margin-top--2">
+<table class="borderless">
+<thead>
+<tr><th scope="col">Oznaka smjera</th><th scope="col"> Opis smjera vjetra</th></tr>
+</thead>
+<tbody>
+<tr><td>N</td><td>sjeverni vjetar</td></tr>
+<tr><td>NE</td><td>sjeveroistočni vjetar</td></tr>
+<tr><td>E</td><td>istočni vjetar</td></tr>
+<tr><td>SE</td><td>jugoistočni vjetar</td></tr>
+<tr><td>S</td><td>južni vjetar</td></tr>
+<tr><td>SW</td><td>jugozapadni vjetar</td></tr>
+<tr><td>W</td><td>zapadni vjetar</td></tr>
+<tr><td>NW</td><td>sjeverozapadni vjetar</td></tr>
+</tbody>
+</table>
+</div>
+<p></p><h5 class="fd-u-margin-bottom--1" style="font-weight: bold;">TENDENCIJA TLAKA</h5>
+Veličina je koja pokazuje promjenu atmosferskog tlaka zraka
+u posljednjem vremenskom razdoblju. 
+
+<div class="glavni__content fd-l-col--12 fd-l-lg-col--8 fd-u-margin-top--2">
+<table class="borderless">
+<thead>
+<tr><th scope="col">Boja teksta</th><th scope="col"> Značenje boje</th></tr>
+</thead>
+<tbody>
+<tr><td><div style="color:#FF0000">crvena boja teksta</div></td><td>tlak pada</td></tr>
+<tr><td>crna boja teksta</td><td>tlak se ne mijenja</td></tr>
+<tr><td><div style="color:#047eb7">plava boja teksta</div></td><td>tlak raste</td></tr>
+</tbody>
+</table>
+</div>
+<p>*iz Gelo "Opća i prometna meteorologija II dio", Zagreb, 2000.  
+<br/><i>u B. Penzar i suradnici "Meteorologija za korisnike" piše:</i>
+<br/><i>"Naziv vremena prema zastrtosti neba oblacima"  </i>
+</p></div>
+</div><!-- /.primary -->
+<div class="fd-l-col--12 fd-l-md-col--4 fd-l-lg-col--3 sidebar fd-u-display--none fd-u-md-display--inline-block" id="secondary">
+<aside class="widget" role="widget">
+<header class="widget__header">
+<h4 class="widget__title">
+                                Podaci o vremenu                            </h4>
+</header>
+<div class="widget__body">
+<ul class="fd-c-nav fd-u-flex--column fd-u-margin-bottom--3 fd-c-nav--bordered-y">
+<li class="fd-u-border-bottom--1 fd-u-border--gray-lighter"><a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=hrvatska1_n">Vrijeme u Hrvatskoj</a>
+</li>
+<li class="fd-u-border-bottom--1 fd-u-border--gray-lighter"><a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=amp">Automatske postaje</a>
+</li>
+<li class="fd-u-border-bottom--1 fd-u-border--gray-lighter"><a class="fd-c-nav__link active" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=europa_n">Vrijeme u Europi</a>
+</li>
+<li class="fd-u-border-bottom--1 fd-u-border--gray-lighter"><a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=dnevext">Dnevne ekstremne temperature</a>
+</li>
+<li class="fd-u-border-bottom--1 fd-u-border--gray-lighter"><a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=more_n">Temperatura mora</a>
+</li>
+<li class="fd-u-border-bottom--1 fd-u-border--gray-lighter"><a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=oborina">Oborina</a>
+</li>
+<li class="fd-u-border-bottom--1 fd-u-border--gray-lighter"><a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=snijeg_n">Visina snijega</a>
+</li>
+<li class="fd-u-border-bottom--1 fd-u-border--gray-lighter"><a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=uvi">UV indeks</a>
+</li>
+<li class="fd-u-border-bottom--1 fd-u-border--gray-lighter"><a class="fd-c-nav__link" href="//meteo.hr/podaci.php?section=podaci_vrijeme&amp;param=webkam">Web kamere</a>
+</li>
+</ul>
+</div><!--/.widget__body -->
+</aside>
+</div><!-- /#secondary -->
+</div><!-- /.fd-l-row -->
+</div><!-- /.fd-l-container -->
+</section>
+<footer class="fd-u-padding-y--2" id="footer">
+<section class="footer__top fd-u-padding-bottom--2 fd-u-display--none fd-u-lg-display--block">
+<div class="fd-l-container">
+<ul class="fd-c-nav fd-c-nav--justified fd-u-align-items--center footer-nav__list" id="footer-nav__list">
+<li class="fd-c-nav__item footer__logo">
+<a class="fd-c-nav__link fd-h1 fd-u-font-weight--semibold" href="//meteo.hr/">DHMZ</a>
+</li>
+<li class="fd-c-nav__item"><a href="//meteo.hr/naslovnica-upozorenja.php?tab=upozorenja">Upozorenja</a></li>
+<li class="fd-c-nav__item"><a href="//meteo.hr/index.php#objave">Objave</a></li>
+<li class="fd-c-nav__item"><a href="//meteo.hr/o_nama.php?section=naslovnica&amp;param=proracun">Proračun</a></li>
+<li class="fd-c-nav__item"><a href="//meteo.hr/objave_najave_natjecaji.php?section=onn&amp;param=natjecaji">Natječaji</a></li>
+</ul>
+</div><!-- /.fd-l-container -->
+</section>
+<section class="footer__bottom fd-u-padding-top--0 fd-u-display--none fd-u-lg-display--block fd-u-lg-padding-top--2 fd-u-font-size--small">
+<div class="fd-l-container">
+<div class="fd-l-row">
+<div class="fd-l-col--12 fd-l-md-col--8">
+<p class="fd-u-text-align--center fd-u-md-text-align--left fd-u-padding-bottom--2 fd-u-md-padding-bottom--0"><a href="//meteo.hr/o_nama.php?section=naslovnica&amp;param=uvjeti">© Državni hidrometeorološki zavod</a> <span class="fd-u-display--block fd-u-lg-display--inline-block"><span class="fd-u-display--none fd-u-lg-display--inline-block">| </span><a href="//meteo.hr/o_nama.php">O nama</a>  |  <a href="//meteo.hr/o_nama.php?section=naslovnica&amp;param=uvjeti">Uvjeti korištenja</a>  |  <a href="https://meteo.hr/o_nama.php?section=naslovnica&amp;param=digitalna_pristupacnost">Digitalna pristupačnost</a>  |  <a href="//meteo.hr/o_nama.php?section=naslovnica&amp;param=adresar_kontakti">Kontakti</a>  |  <a href="//meteo.hr/o_nama.php?section=naslovnica&amp;param=pio">PiO</a>  |  <a href="//meteo.hr/index_en.php">EN</a> </span></p>
+</div><!-- /.fd-l-col-6 -->
+<div class="fd-l-col--12 fd-l-md-col--4">
+<p class="fd-u-text-align--center fd-u-md-text-align--right">
+                            Potvrde o akreditaciji: <a href="//meteo.hr/kz/kem_lab/1427.pdf">1427</a> | <a href="//meteo.hr/kz/kem_lab/1505.pdf">1505</a>  |  <a href="//klima.hr/razno/metlab/2365.pdf">2365</a>  Pratite nas:  <a class="fd-c-button--twitter" href="https://twitter.com/DHMZ_HR"><i aria-hidden="true" class="mic fd-c-icon--twitter fd-c-icon--lg"></i></a>  <a href="https://www.youtube.com/channel/UCqOO-SG0P9J_eWZrI5HW-qA"><i class="mic fd-c-icon--youtube-play fd-c-icon--lg"></i></a>  <a href="//meteo.hr/rss.xml"><i aria-hidden="true" class="mic fd-c-icon--rss-square fd-c-icon--lg"></i></a>
+</p>
+</div><!-- /.fd-l-col-6 -->
+</div><!-- /.fd-l-row -->
+</div><!-- /.fd-l-container -->
+</section>
+<!-- mobile verzija -->
+<section class="footer__bottom fd-u-padding-top--0 fd-u-lg-display--none fd-u-display--block fd-u-font-size--small">
+<div class="fd-l-container">
+<div class="fd-l-row">
+<div class="fd-l-col--12 fd-l-md-col--8">
+<p class="fd-u-text-align--center fd-u-md-text-align--left fd-u-padding-bottom--2 fd-u-md-padding-bottom--0"><a href="//meteo.hr/o_nama.php?section=naslovnica&amp;param=uvjeti">© Državni hidrometeorološki zavod</a> <span class="fd-u-display--block fd-u-lg-display--inline-block"><span class="fd-u-display--none fd-u-lg-display--inline-block">| </span><a href="//meteo.hr/o_nama.php">O nama</a>  |  <a href="//meteo.hr/o_nama.php?section=naslovnica&amp;param=uvjeti">Uvjeti korištenja</a>  |  <a href="https://meteo.hr/o_nama.php?section=naslovnica&amp;param=digitalna_pristupacnost">Digitalna pristupačnost</a>  |  <a href="//meteo.hr/o_nama.php?section=naslovnica&amp;param=adresar_kontakti_mobile">Kontakti</a>  |  <a href="//meteo.hr/o_nama.php?section=naslovnica&amp;param=pio">PiO</a>  |  <a href="//meteo.hr/index_en.php">EN</a> </span></p>
+</div><!-- /.fd-l-col-6 -->
+<div class="fd-l-col--12 fd-l-md-col--4">
+<p class="fd-u-text-align--center fd-u-md-text-align--right">
+                            Potvrde o akreditaciji: <a href="//meteo.hr/kz/kem_lab/1427.pdf">1427</a>  |  <a href="//meteo.hr/kz/kem_lab/1505.pdf">1505</a>  |  <a href="//klima.hr/razno/metlab/2365.pdf">2365</a>  Pratite nas: <a fd-c-button--twitter="" href="https://twitter.com/DHMZ_HRclass="><i aria-hidden="true" class="mic fd-c-icon--twitter fd-c-icon--lg"></i></a> <a href="https://www.youtube.com/channel/UCqOO-SG0P9J_eWZrI5HW-qA"><i class="mic fd-c-icon--youtube-play fd-c-icon--lg"></i></a> <a href="//meteo.hr/rss.xml"><i aria-hidden="true" class="mic fd-c-icon--rss-square fd-c-icon--lg"></i></a>
+</p>
+</div><!-- /.fd-l-col-6 -->
+</div><!-- /.fd-l-row -->
+</div><!-- /.fd-l-container -->
+</section>
+</footer>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtD8ncJ56vZi1C6J_sI_HzUKnqwaSBJU0"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/galleria.min.js"></script>
+<script src="assets/js/custom-scroll/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="assets/js/fdf.js"></script>
+<script src="assets/js/custom.js"></script>
+<!-- <script src="fdaw/js/fdaw.dist.js"></script>-->
+<script>
+    jQuery(document).ready(function($) {
+        $(".hours-browser-v2__hours-wrap").mCustomScrollbar({
+            axis : "x",
+            theme : "dark",
+            scrollButtons : {
+                enable : true
+            },
+            advanced : {
+                autoExpandHorizontalScroll:true
+            }
+        });
+    });
+    </script>
+<script>
+jQuery(document).ready(function($) {
+    $(".entry__content").fitVids();
+    $(".responsive-video").fitVids();
+});
+</script>
+</body>
+</html>
